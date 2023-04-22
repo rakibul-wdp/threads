@@ -16,10 +16,10 @@ import { isBase64Image } from "@/lib/utils";
 import { UserValidation } from "@/lib/validations/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { usePathname, useRouter } from "next/navigation";
 
 interface Props {
   user: {
@@ -95,6 +95,12 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
       image: values.profile_photo,
       path: pathname,
     });
+
+    if (pathname === "/profile/edit") {
+      router.back();
+    } else {
+      router.push("/");
+    }
   };
 
   return (
