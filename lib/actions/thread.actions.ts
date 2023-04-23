@@ -1,3 +1,6 @@
+import { revalidatePath } from "next/cache";
+import Thread from "../models/thread.model";
+import User from "../models/user.model";
 import { connectToDB } from "../mongoose";
 
 interface Params {
@@ -15,5 +18,16 @@ export async function createThread({
 }: Params) {
   connectToDB();
 
-  const createdThread = await Thread.create();
+  const createdThread = await Thread.create({
+    text,
+    author,
+    community: null,
+  });
+
+  // Update user model
+  await User.findByIdAndUpdate(author, {
+    $push: { threads: createdThread._id },
+  });
+
+  revalidatePath(path);
 }
