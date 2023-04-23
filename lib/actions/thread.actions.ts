@@ -1,3 +1,5 @@
+import { connectToDB } from "../mongoose";
+
 interface Params {
   text: string;
   author: string;
@@ -10,4 +12,8 @@ export async function createThread({
   author,
   communityId,
   path,
-}: Params) {}
+}: Params) {
+  connectToDB();
+
+  const createdThread = await Thread.create();
+}
