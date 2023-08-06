@@ -20,6 +20,12 @@ interface Props {
 const AccountProfile = ({ user, btnTitle }: Props) => {
   const form = useForm({
     resolver: zodResolver(UserValidation),
+    defaultValues: {
+      profile_photo: "",
+      name: "",
+      username: "",
+      bio: "",
+    },
   });
 
   return <Form></Form>;
